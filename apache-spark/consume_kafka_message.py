@@ -20,17 +20,18 @@ df = (spark.readStream
 df = df.selectExpr("CAST(value AS STRING)")
 
 # 30분 간격으로 윈도우 생성
-windowedCounts = df \
-	.groupBy(
-	window(col("timestamp"), "30 minutes")
-).count()
+windowedCounts = (df
+	.groupBy(window(col("timestamp"), "30 minutes"))
+    .count()
+)
 
 # 콘솔에 출력 (실제 운영에서는 이 부분을 S3에 쓰는 코드로 대체)
-query = windowedCounts \
-	.writeStream \
-	.outputMode("complete") \
-	.format("console") \
-	.option("truncate", "false") \
+query = (windowedCounts
+	.writeStream
+	.outputMode("complete")
+	.format("console")
+	.option("truncate", "false")
 	.start()
+)
 
 query.awaitTermination()
