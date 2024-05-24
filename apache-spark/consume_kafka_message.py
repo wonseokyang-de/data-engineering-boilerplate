@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import window, col
 
+
 # Spark 세션 생성
 spark = (SparkSession.builder
 	.appName("KafkaToS3Batch")
