@@ -112,6 +112,7 @@ class SageMakerSubmitCmdOperator(BaseOperator):
         instance_connection = websocket.create_connection(
             f'{ws_base_url}/{terminal_name}',
             cookie='; '.join(['%s=%s' % (k, v) for k, v in cookies.items()]),
+            # TODO: Make header to changable
             header=['User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'],
             host=url_host_address,
             origin=url_base

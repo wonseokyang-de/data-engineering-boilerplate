@@ -5,11 +5,6 @@ from airflow.sensors.base import BaseSensorOperator
 from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
 
 
-def get_sagemaker_client():
-    aws_hook = AwsBaseHook(client_type='sagemaker', region_name='ap-northeast-2') # TODO: not to code like hard coding
-    return aws_hook.get_client_type()
-
-
 class SageMakerNotebookInstanceSensor(BaseSensorOperator):
 
     template_fields = ('instance_name',)
@@ -28,7 +23,11 @@ class SageMakerNotebookInstanceSensor(BaseSensorOperator):
         self.status_checking_seconds = status_checking_seconds
 
     def poke(self, context):
-        sagemaker_client = get_sagemaker_client()
+        sagemaker_client = AwsBaseHook(
+            client_type='sagemaker', 
+            region_name='ap-northeast-2'
+        ).get_client_type()
+
         logging.info(f"""
         ---ARGS: 
             instance_name: {self.instance_name}
