@@ -3,6 +3,10 @@ from airflow import DAG
 from airflow.models import DagRun
 from airflow.decorators import task
 from airflow.providers.amazon.aws.operators.s3 import S3ListOperator
+from airflow.executors.debug_executor import DebugExecutor
+
+
+executor = DebugExecutor()
 
 with DAG(
     dag_id='s3_file_check',
@@ -15,8 +19,16 @@ with DAG(
 
     @task
     def example_task(data_interval_start: DagRun=None):
+
+        print("START!!")
+
         s3_client = boto3.client('s3')
 
         print(s3_client)
 
     example_task()
+
+
+if __name__ == '__main__':
+    dag.clear()
+    dag.run(executor=executor)  # DebugExecutor·Î DAG ½ÇÇà

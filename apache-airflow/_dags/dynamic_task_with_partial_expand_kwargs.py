@@ -20,4 +20,4 @@ with DAG(
     task = PythonOperator.partial(
         task_id='dynamic_task',
         python_callable=print_hello_with_date
-    ).expand()
+    ).expand(['test', 'test2', 'test1'])
