@@ -11,14 +11,12 @@ with DAG(
 ) as dag:
 
     @task
-    def get_dag_run_kwargs(dag_run=None):
-        return dag_run.conf.get('trigger_list')
+    def parse_dag_run_kwargs(dag_run=None):
+        return dag_run.conf['dag_run_kwargs']
     
     @task
-    def print_kwargs(trigger_list):
-        print(trigger_list)
+    def print_kwargs(table):
+        print(table)
 
-    print_kwargs.partial(
-        task_id='print_kwargs',
-    ).expand(get_dag_run_kwargs())
+    print_kwargs.partial().expand_kwargs(parse_dag_run_kwargs())
     

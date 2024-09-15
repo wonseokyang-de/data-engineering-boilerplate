@@ -14,21 +14,21 @@ with DAG(
 
     @task
     def generate_kwargs(data_interval_end=None):
-        target_tables = ['ea01', 'eb01', 'ec01']
-
         trigger_dag_run_kwargs = []
-        for table in target_tables:
-            _trigger_dag_run_kwargs = []
-            for i in range(5):
-                _trigger_dag_run_kwargs.append({
-                    'execution_date': data_interval_end.add(microseconds=i),
-                    'conf': {
-                        'index': i,
-                        'table': table,
-                        'data': f'data_{i}'
-                    }
+        for i in range(3):
+            base_kwargs = {
+                'execution_date': data_interval_end.add(microseconds=i),
+            }
+
+            dag_run_kwargs = []
+            for table in ['ea01', 'eb01', 'ec01']:
+                dag_run_kwargs.append({
+                    'table': table
                 })
-            trigger_dag_run_kwargs.append(_trigger_dag_run_kwargs)
+
+            base_kwargs['conf']['dag_run_kwargs'] = dag_run_kwargs
+
+            trigger_dag_run_kwargs.append(base_kwargs)
             
         return trigger_dag_run_kwargs
             
