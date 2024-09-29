@@ -5,3 +5,6 @@ Boilerplate about data-engineering
     - DAG with some techniques
     - CustomOperator
 - Delta
+
+### TODO:
+1. Complete boto3.client('glue') to collect job runs
