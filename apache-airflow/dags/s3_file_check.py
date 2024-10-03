@@ -18,13 +18,10 @@ with DAG(
 ) as dag:
 
     @task
-    def example_task(data_interval_start: DagRun=None):
-
-        print("START!!")
-
+    def example_task(data_interval_start=None):
         s3_client = boto3.client('s3')
 
-        print(s3_client)
+        print(data_interval_start)
 
     example_task()
 
