@@ -29,5 +29,9 @@ raw_job_runs_df = pd.DataFrame(job_runs['some_key'])
 # Explode nested column like Arguments
 ...
 
+# Apply some preprocessing job
+...
+
 # Save to S3 with PyArrow
+# result_df.to_parquet(save_path, compression='snappy')
 ...
