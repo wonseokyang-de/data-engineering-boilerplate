@@ -35,3 +35,5 @@ raw_job_runs_df = pd.DataFrame(job_runs['some_key'])
 # Save to S3 with PyArrow
 # result_df.to_parquet(save_path, compression='snappy')
 ...
+
+# Test to upload from Blinkshell on iPad Pro
