@@ -5,8 +5,6 @@ from airflow.sensors.base import BaseSensorOperator
 from airflow.providers.amazon.aws.hooks.base_aws import AwsBaseHook
 
 
-class SageMakerNotebookInstanceSensor(BaseSensorOperator):
-
     template_fields = ('instance_name',)
     ui_color = "#4B863E"
 

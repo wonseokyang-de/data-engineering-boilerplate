@@ -2,6 +2,7 @@ import logging
 
 from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
 
+
 class GlueJobWithLoggingOperator(GlueJobOperator):
     def pre_execute(self, context):
         logging.info("Preparing to run Glue Job with params")
