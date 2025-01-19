@@ -3,6 +3,8 @@ name: Deploy Airflow DAG to EC2
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "**/dags/**"  
 
 jobs:
   deploy:
