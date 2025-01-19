@@ -1,0 +1,34 @@
+name: Deploy Airflow DAG to EC2
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Add known_hosts
+        run: |
+          # EC2의 호스트 키 추가 (호스트네임 또는 IP)
+          ssh-keyscan -H airflow.wizardofdata.com >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          # 예: rsync로 리포지토리 내용을 EC2의 특정 폴더로 복사
+          rsync -avz -e "ssh -i ~/.ssh/id_rsa" \
+            --exclude ".git/" \
+            ./ ubuntu@airflow.wizardofdata.com:/home/ted-yang/Env/airflow/Env/dags
